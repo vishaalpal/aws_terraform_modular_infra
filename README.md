@@ -1,6 +1,6 @@
 # aws_terraform_modular_infra
 The purpose of this personal project is to learn and understand the basics of Terraform. 
-The goal was to create a modular template for IAC on the AWS platform.
+The goal was to create a simple environment on the AWS platform using Terraform with a modular approach. 
 
 It's currently configured to launch a VPC with a public subnet. 
 In this public subnet it launches an Ubuntu EC2 instance webserver bootstrapped with userdata to install Apache. The webserver simply displays some text. 
