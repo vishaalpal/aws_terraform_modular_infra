@@ -1,1 +1,4 @@
+# Ignore the following files
 *.ppk
+*.tfstate
+*.tfstate.backup
