@@ -16,4 +16,4 @@ Using this template, you are able to launch the following resources in your AWS 
 * Subnet 
 
 NOTE:
-Modify the *providers.tf* file to use your own AWS credentials file, more info on that here - https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html
+Modify the *providers.tf* file to use your own AWS credentials file, more info on that [here](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html)
