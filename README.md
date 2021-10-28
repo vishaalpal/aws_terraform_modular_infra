@@ -20,6 +20,6 @@ Using this template, you are able to launch the following resources in your AWS 
 NOTE:
 Modify the *providers.tf* file to use your own AWS credentials file, more info on that [here](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html).
 
-I was able to learn Terraform and create this project following the below tutorials:
+I was able to learn Terraform and create this project from the below tutorials:
 * [Master Classs: Terraform for AWS (Beginner to Pro)](https://www.youtube.com/watch?v=tQlMj_nyN6s&list=PLMjNjGLy-cuzRMzjDU31f_bB2ftFA6W7e&index=8&ab_channel=ShankarZaiswal)
 * [Terraform Course - Automate your AWS cloud infrastructure](https://www.youtube.com/watch?v=SLB_c_ayRMo&list=PLMjNjGLy-cuzRMzjDU31f_bB2ftFA6W7e&index=7&t=7197s&ab_channel=freeCodeCamp.org)
