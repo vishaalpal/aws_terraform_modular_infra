@@ -34,7 +34,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v3
       with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-session-name: github_actions_runner_role_session
+          role-session-name: github_actions_runner_deployer
           aws-region: ${{ env.AWS_REGION }}
     
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
@@ -58,5 +58,3 @@ jobs:
     - name: Execute Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
-
-
