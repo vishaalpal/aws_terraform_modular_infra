@@ -5,10 +5,10 @@ on:
     workflows:
     - "Deploy Terraform Code"
     branches:
-      - main
+      - destroy
     types:
       - completed 
-      
+
 env:
   AWS_REGION : ap-southeast-2 #Change to reflect your Region
 
