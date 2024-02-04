@@ -32,6 +32,14 @@ jobs:
     - name: Checkout Git Repository
       uses: actions/checkout@v3
     
+    # Assumes an AWS Role  
+    - name: Assume AWS Role via GitHub OIDC
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github_actions_runner_role_session
+          aws-region: ${{ env.AWS_REGION }}
+    
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Install Terraform CLI on GitHub Actions Runner
       uses: hashicorp/setup-terraform@v1
@@ -43,14 +51,6 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Execute Terraform Format
       run: terraform fmt
-
-    # Assumes an AWS Role  
-    - name: Assume AWS Role via GitHub OIDC
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-session-name: github_actions_runner_role_session
-          aws-region: ${{ env.AWS_REGION }}
 
     # Generates an execution plan for Terraform
     - name: Execute Terraform Plan
