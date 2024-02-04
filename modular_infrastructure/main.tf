@@ -66,7 +66,7 @@ module "create_sg" {
   set_sg_description    = "modular sg for webservers created by terraform"
   get_sg_vpc_id         = module.create_vpc.vpc_id_output
   set_sg_ingress_open   = "0.0.0.0/0"
-  set_sg_ingress_custom = "132.239.195.187"
+  set_sg_ingress_custom = "132.239.195.187/32"
   set_sg_egress_open    = "0.0.0.0/0"
   set_sg_name_tag       = "modular webserver sg"
 }
