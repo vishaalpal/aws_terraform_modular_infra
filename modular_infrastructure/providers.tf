@@ -10,7 +10,7 @@ terraform {
 
 # Configure the AWS Provider
 provider "aws" {
-  region                  = "ap-southeast-2"
-  shared_credentials_file = "/Users/vishaalpal/.aws/credentials"
+  shared_config_files = "Users/vishaalpal/.aws/config"
+  shared_credentials_files = "/Users/vishaalpal/.aws/credentials"
   profile                 = "vishaalpal"
 }
