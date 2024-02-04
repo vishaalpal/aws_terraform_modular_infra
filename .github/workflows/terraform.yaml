@@ -48,7 +48,7 @@ jobs:
     - name: Set backend S3 bucket key
       env:
         BRANCH: ${{ steps.extract_branch.outputs.branch }}
-      run: sed -i "s/<BRANCH_NAME>/$BRANCH/g" meta.tf
+      run: sed -i "s/<BRANCH_NAME>/$BRANCH/g" ./modular_infrastructure/meta.tf
     
     - name: Terraform Init
       run: terraform init
