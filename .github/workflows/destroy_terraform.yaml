@@ -32,6 +32,14 @@ jobs:
     - name: Checkout Git Repository
       uses: actions/checkout@v3
     
+    # Assumes an AWS Role  
+    - name: Assume AWS Role via GitHub OIDC
+      uses: aws-actions/configure-aws-credentials@v3
+      with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github_actions_runner_role_session
+          aws-region: ${{ env.AWS_REGION }}
+    
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Install Terraform CLI on GitHub Actions Runner
       uses: hashicorp/setup-terraform@v1
@@ -44,20 +52,12 @@ jobs:
     - name: Execute Terraform Format
       run: terraform fmt
 
-    # Assumes an AWS Role  
-    - name: Assume AWS Role via GitHub OIDC
-      uses: aws-actions/configure-aws-credentials@v3
-      with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          role-session-name: github_actions_runner_role_session
-          aws-region: ${{ env.AWS_REGION }}
-
     # Generates an execution plan for Terraform
-    - name: Execute Terraform Plan
+    - name: Execute Terraform Destroy Plan
       run: terraform plan -destroy -input=false
 
     # On push to "main", build or change infrastructure according to Terraform configuration files
     # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Execute Terraform Apply
+    - name: Execute Terraform Destroy Apply
       if: github.ref == 'refs/heads/destroy' && github.event_name == 'push'
       run: terraform destroy -auto-approve -input=false
