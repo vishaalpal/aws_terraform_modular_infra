@@ -42,16 +42,12 @@ jobs:
       run: terraform fmt
 
     # Assumes an AWS Role  
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-southeast-2
-        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-        # role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
-        role-duration-seconds: 1200
-        role-session-name: MySessionName
+    - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: github_actions_runner_role_session
+          aws-region: ${{ env.AWS_REGION }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
