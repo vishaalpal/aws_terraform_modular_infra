@@ -2,3 +2,4 @@
 *.ppk
 *.tfstate
 *.tfstate.backup
+*.env
