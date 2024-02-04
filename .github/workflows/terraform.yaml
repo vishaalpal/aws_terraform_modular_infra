@@ -1,0 +1,69 @@
+name: Terraform 
+
+on: 
+  workflow_dispatch:
+    inputs:
+      terraform-action:
+        description: "Choose terraform action"
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+          - 'plan'
+          - 'apply'
+          - 'destroy'
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-action:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
+      contents: read
+    
+    defaults: 
+      run: 
+        shell: bash
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:   
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        aws-region: ap-southeast-2
+      
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+    
+    - name: Set backend S3 bucket key
+      env:
+        BRANCH: ${{ steps.extract_branch.outputs.branch }}
+      run: sed -i "s/<BRANCH_NAME>/$BRANCH/g" meta.tf
+    
+    - name: Terraform Init
+      run: terraform init
+    
+    - name: Terraform Format
+      run: terraform fmt -check -diff
+
+    - name: Select Terraform Action
+      id: select_action
+      run: echo "::set-output name=action::${{ github.event.inputs.terraform-action }}"
+
+    - name: Terraform Plan
+      run: terraform plan 
+    
+    - name: Terraform ${{ steps.select_action.outputs.action }}
+      if: ${{ steps.select_action.outputs.actiopn == 'apply' || steps.select_action.outputs.action == 'destroy' }}
+      run: |
+        terraform ${{ steps.select_action.outputs.action }} -auto-approve
