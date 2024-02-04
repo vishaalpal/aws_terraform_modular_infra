@@ -65,6 +65,6 @@ jobs:
       run: terraform plan 
     
     - name: Terraform ${{ steps.select_action.outputs.action }}
-      if: ${{ steps.select_action.outputs.actiopn == 'apply' || steps.select_action.outputs.action == 'destroy' }}
+      if: ${{ steps.select_action.outputs.action == 'apply' || steps.select_action.outputs.action == 'destroy' }}
       run: |
         terraform ${{ steps.select_action.outputs.action }} -auto-approve
