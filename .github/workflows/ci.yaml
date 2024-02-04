@@ -42,7 +42,7 @@ jobs:
       run: terraform fmt
       
     - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v1.7.0
+      uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::969496245957:role/github_actions_runners #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
