@@ -40,17 +40,16 @@ jobs:
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt
-    
-    - name: Git clone the repository
-        uses: actions/checkout@v3
-      - name: configure aws credentials
+      
+    - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::969496245957:role/github_actions_runners #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      # Hello from AWS: WhoAmI
-      - name: Sts GetCallerIdentity
+    
+    # Hello from AWS: WhoAmI
+    - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
 
