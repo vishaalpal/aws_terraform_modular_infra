@@ -36,7 +36,11 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-session-name: github_actions_runner_role_session
           aws-region: ${{ env.AWS_REGION }}
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 2de85213a53444d2e5763fdccb88f70d75c77e32
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Install Terraform CLI on GitHub Actions Runner
       uses: hashicorp/setup-terraform@v1
