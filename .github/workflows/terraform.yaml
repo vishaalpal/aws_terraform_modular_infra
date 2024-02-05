@@ -29,42 +29,42 @@ jobs:
         working-directory: ./modular_infrastructure  
     
     steps:
-    - name: Checkout
+    - name: checkout current git repository
       uses: actions/checkout@v3
 
-    - name: Configure AWS credentials
+    - name: configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:   
         role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
         aws-region: ap-southeast-2
       
-    - name: Setup Terraform
+    - name: configure terraform on GitHub Actions runner
       uses: hashicorp/setup-terraform@v2
 
-    - name: Extract branch name
+    - name: extract GitHub repository branch name
       shell: bash
       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       id: extract_branch
     
-    - name: Set backend S3 bucket key
+    - name: configure S3 bucket key for remote backend
       env:
         BRANCH: ${{ steps.extract_branch.outputs.branch }}
       run: sed -i "s/<BRANCH_NAME>/$BRANCH/g" meta.tf
     
-    - name: Terraform Init
+    - name: terraform init
       run: terraform init
     
-    - name: Terraform Format
+    - name: terraform format
       run: terraform fmt -check -diff
 
-    - name: Select Terraform Action
+    - name: retrieve selected GitHub Actions workflow input
       id: select_action
       run: echo "action=${{ github.event.inputs.terraform-action }}" >> $GITHUB_ENV
 
-    - name: Terraform Plan
+    - name: terraform plan
       run: terraform plan 
     
-    - name: Terraform ${{ env.action}}
+    - name: terraform ${{ env.action}}
       if: ${{ contains('apply destroy', env.action) }}
       run: |
         terraform ${{ env.action }} -auto-approve
