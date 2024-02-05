@@ -64,8 +64,7 @@ jobs:
     - name: Terraform Plan
       run: terraform plan 
     
-    - name: Terraform Apply/Destroy
+    - name: Terraform ${{ env.action}}
       if: ${{ contains('apply destroy', env.action) }}
       run: |
         terraform ${{ env.action }} -auto-approve
-        
