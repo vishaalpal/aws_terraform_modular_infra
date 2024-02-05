@@ -59,12 +59,12 @@ jobs:
 
     - name: Select Terraform Action
       id: select_action
-      run: echo "{action}=${{ github.event.inputs.terraform-action}}" >> ${GITHUB_OUTPUT}
+      run: echo "{action}=${{ github.event.inputs.terraform-action}}" >> ${{ RUNNER_TEMP }}/env
 
     - name: Terraform Plan
       run: terraform plan 
     
-    - name: Terraform ${{ steps.select_action.outputs.action }}
-      if: ${{ steps.select_action.outputs.action == 'apply' || steps.select_action.outputs.action == 'destroy' }}
+    - name: Terraform ${{ env.action }}
+      if: ${{ env.action == 'apply' || env.action == 'destroy' }}
       run: |
-        terraform ${{ steps.select_action.outputs.action }} -auto-approve
+        terraform ${{ env.action }} -auto-approve
