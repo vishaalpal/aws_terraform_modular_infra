@@ -59,7 +59,7 @@ jobs:
 
     - name: Select Terraform Action
       id: select_action
-      run: echo "{action}=${{ github.event.inputs.terraform-action}}" >> $${GITHUB_OUTPUT}
+      run: echo "{action}=${{ github.event.inputs.terraform-action}}" >> ${GITHUB_OUTPUT}
 
     - name: Terraform Plan
       run: terraform plan 
